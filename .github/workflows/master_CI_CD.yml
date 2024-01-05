@@ -5,17 +5,27 @@ on:
   pull_request:
     branches: [ "master"]
 jobs:
-  build:
+  master_ci_cd:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 18.x
 
-      - name: Setup
+      - name: list dir
+        run: ls -la
+
+      - name: Setup - npm install
         run: npm ci
+
+      - name: show node_modules
+        run: ls node_modules
+
+      - name: Install ChromeHeadlessCI
+        run: |
+          npm install -g karma-chrome-launcher
 
       - name: Test
         run: |
